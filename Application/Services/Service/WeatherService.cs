@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks;
+using Domain.Models.Models;
 
 
 namespace Application.Services.Service
@@ -18,25 +19,22 @@ namespace Application.Services.Service
     public class WeatherService : IWeatherService
     {
         private readonly IConfiguration _configuration;
-        private readonly IWeatherDAL _context;
+        private readonly IWeatherRepository _context;
 
-        public WeatherService(IConfiguration configuration, IWeatherDAL context)
+        public WeatherService(IConfiguration configuration, IWeatherRepository context)
         {
             _configuration = configuration;
             _context = context;
         }
 
-        public async Task<CityEnvDto> GetByCityName(string cityName)
+        public async Task<CityEnvironmentInfoDto> GetByCityName(string cityName)
         {
-            CheckToken();
             return await _context.GetByCityName(cityName);
         }
 
         public Task<bool> CheckToken()
         {
-
-
-            throw new NotImplementedException();
+            return null;
         }
 
     }

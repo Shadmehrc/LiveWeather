@@ -1,4 +1,5 @@
 ﻿
+using Domain.Models.Models;
 using LiveWeather;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Application.Services.ServiceInterface
 {
     public interface IWeatherService
     {
-        public Task<CityEnvDto> GetByCityName(string CityName);
+        public Task<CityEnvironmentInfoDto> GetByCityName(string CityName);
         public Task<bool> CheckToken();
     
     }

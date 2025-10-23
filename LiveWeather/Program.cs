@@ -1,4 +1,4 @@
-using Infrastructure.Persistence;
+
 using LiveWeather.Configuration.DependecyInjection;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,9 +26,9 @@ builder.Services.AddCors(options =>
 });
 
 
-//Add In memory DB
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseInMemoryDatabase("MyInMemoryDb"));
+////Add In memory DB
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//        options.UseInMemoryDatabase("MyInMemoryDb"));
 
 builder.Services.AddControllers();
 

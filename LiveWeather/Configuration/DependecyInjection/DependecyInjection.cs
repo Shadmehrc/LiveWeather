@@ -10,7 +10,8 @@ namespace LiveWeather.Configuration.DependecyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IWeatherService, WeatherService>();
-            services.AddScoped<IWeatherDAL, WeatherDAL>();
+            services.AddScoped<IWeatherRepository, WeatherRepository>();
+            services.AddScoped<IStateStoreRepository, SqlStateStoreRepository>();
             return services;
         }
     }

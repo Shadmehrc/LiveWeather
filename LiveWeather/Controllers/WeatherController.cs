@@ -26,6 +26,7 @@ namespace LiveWeather.Controllers
             var result = await _weatherService.GetByCityName(city);
             return Ok(result);
         }
+
     }
 
 }
