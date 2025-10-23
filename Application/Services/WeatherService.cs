@@ -17,7 +17,7 @@ namespace Application.Services
         public async Task<CityEnvironmentInfoDto> GetByCityName(string cityName)
         {
             if (string.IsNullOrWhiteSpace(cityName))
-                throw new ArgumentException("cityName is required.");
+                throw new Exception("cityName is required.");
 
             return await _context.GetByCityName(cityName);
         }

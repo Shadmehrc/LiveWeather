@@ -8,5 +8,6 @@ namespace Application.Interface.ServiceInterface
 {
     public interface IStateStoreRepository
     {
+      bool OpenWeatherApiEnsureUsage();
     }
 }

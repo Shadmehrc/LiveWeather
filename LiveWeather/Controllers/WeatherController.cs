@@ -16,7 +16,7 @@ namespace LiveWeather.Controllers
             this._weatherService = _weatherService;
         }
         [HttpGet("city/{city}")]
-        public async Task<ActionResult<ApiResponse<CityEnvironmentInfoDto>>> GetWeatherByName(string city, CancellationToken ct)
+        public async Task<ActionResult<ApiResponse<CityEnvironmentInfoDto>>> GetCityWeatherByName(string city)
         {
             try
             {

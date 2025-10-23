@@ -23,21 +23,33 @@ namespace Infrastructure.ExternalServices
 {
     public class WeatherCrawller : IWeatherCrawller
     {
-        private readonly OpenWeatherConfig _weatherConfig;
         private readonly HttpClient _httpClient;
+        private readonly OpenWeatherConfig _weatherConfig;
         private readonly ILogger<WeatherCrawller> _logger;
+        private readonly IStateStoreRepository _stateStore;
 
-        public WeatherCrawller(HttpClient http, IOptions<OpenWeatherConfig> weatherConfig, ILogger<WeatherCrawller> logger)
+        public WeatherCrawller(
+            HttpClient http,
+            IOptions<OpenWeatherConfig> weatherConfig,
+            ILogger<WeatherCrawller> logger,
+            IStateStoreRepository stateStore)
         {
             _httpClient = http;
             _weatherConfig = weatherConfig.Value;
             _logger = logger;
+            _stateStore = stateStore;
         }
+
 
         public async Task<CityEnvironmentInfoDto> GetByCityName(string cityName)
         {
             try
             {
+                bool isDebugger = System.Diagnostics.Debugger.IsAttached;
+                if (!isDebugger)
+                {
+                    _stateStore.OpenWeatherApiEnsureUsage();
+                }
 
                 string openWeatherApiKey = _weatherConfig.ApiKey;
 
@@ -79,19 +91,19 @@ namespace Infrastructure.ExternalServices
                 throw new Exception(ex.Message);
             }
         }
-        private async Task<T> GetJson<T>(string url, int retryCount = 0, CancellationToken ct = default)
+        private async Task<T> GetJson<T>(string url, int retryCount = 0)
         {
             _logger.LogInformation("GET {Url} (try {Try})", url, retryCount + 1);
             try
             {
-                using var resp = await _httpClient.GetAsync(url, ct);
-                var body = await resp.Content.ReadAsStringAsync(ct);
+                using var resp = await _httpClient.GetAsync(url);
+                var body = await resp.Content.ReadAsStringAsync();
 
                 if (!resp.IsSuccessStatusCode)
                 {
                     _logger.LogWarning("Request failed ({Status}) on {Url}. Try {Try}", (int)resp.StatusCode, url, retryCount + 1);
-                    if (retryCount > 3) throw new Exception($"Max retry reached for {url}");
-                    return await GetJson<T>(url, retryCount + 1, ct);
+                    if (retryCount > 3) throw new Exception($"Max retry reached for {url}, Error occured.");
+                    return await GetJson<T>(url, retryCount + 1);
                 }
 
                 _logger.LogInformation("Success ({Status}) {Url}", (int)resp.StatusCode, url);

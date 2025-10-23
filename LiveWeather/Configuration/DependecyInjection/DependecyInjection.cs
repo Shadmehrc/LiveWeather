@@ -12,6 +12,7 @@ namespace LiveWeather.Configuration.DependecyInjection
             services.AddScoped<IWeatherService, WeatherService>();
             services.AddHttpClient<IWeatherCrawller, WeatherCrawller>();
             services.AddScoped<IStateStoreRepository, SqlStateStoreRepository>();
+            services.AddScoped<IStateStoreRepository, SqlStateStoreRepository>();
             return services;
         }
     }
