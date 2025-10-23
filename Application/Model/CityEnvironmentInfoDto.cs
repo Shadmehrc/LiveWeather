@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Models
+namespace Application.DTO
 {
     public class CityEnvironmentInfoDto
     {
-        public string City { get; set; } = string.Empty;
+        public string City { get; set; }
         public double Temperature { get; set; }
         public int Humidity { get; set; }
         public double WindSpeed { get; set; }

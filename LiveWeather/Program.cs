@@ -1,6 +1,8 @@
-
+﻿
+using Application.Interface.ServiceInterface;
+using Domain.Configuration;
+using Infrastructure.ExternalServices;
 using LiveWeather.Configuration.DependecyInjection;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,19 +20,20 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
     });
 });
 
-
-////Add In memory DB
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//        options.UseInMemoryDatabase("MyInMemoryDb"));
-
 builder.Services.AddControllers();
+
+
+
+builder.Services.Configure<OpenWeatherConfig>(
+    builder.Configuration.GetSection("OpenWeatherConfig"));
+
 
 
 var app = builder.Build();

@@ -1,7 +1,7 @@
-﻿using Application.Services.Service;
-using Application.Services.ServiceInterface;
-using Infrastructure.DAL.RepositoryInterface;
-using Infrastructure.DAL.RepositoryService;
+﻿using Application.Interface.ServiceInterface;
+using Application.Services;
+using Infrastructure.ExternalServices;
+using Infrastructure.RepositoryService;
 
 namespace LiveWeather.Configuration.DependecyInjection
 {
@@ -10,7 +10,7 @@ namespace LiveWeather.Configuration.DependecyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IWeatherService, WeatherService>();
-            services.AddScoped<IWeatherRepository, WeatherRepository>();
+            services.AddHttpClient<IWeatherCrawller, WeatherCrawller>();
             services.AddScoped<IStateStoreRepository, SqlStateStoreRepository>();
             return services;
         }

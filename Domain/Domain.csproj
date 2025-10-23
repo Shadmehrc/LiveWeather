@@ -6,10 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Models\CustomModels\**" />
-    <EmbeddedResource Remove="Models\CustomModels\**" />
-    <None Remove="Models\CustomModels\**" />
-  </ItemGroup>
-
 </Project>

@@ -1,18 +1,16 @@
-﻿
-using Domain.Models.Models;
-using LiveWeather;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.DTO;
 
-namespace Application.Services.ServiceInterface
+namespace Application.Interface.ServiceInterface
 {
     public interface IWeatherService
     {
         public Task<CityEnvironmentInfoDto> GetByCityName(string CityName);
-        public Task<bool> CheckToken();
+
     
     }
 

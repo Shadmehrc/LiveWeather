@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.DAL.RepositoryInterface
+namespace Application.Interface.ServiceInterface
 {
     public interface IStateStoreRepository
     {

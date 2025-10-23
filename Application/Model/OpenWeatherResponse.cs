@@ -1,6 +1,6 @@
-using Domain.Models.Models;
 
-namespace LiveWeather
+
+namespace Application.DTO
 {
     public class OpenWeatherResponse
     {
@@ -9,7 +9,7 @@ namespace LiveWeather
         public Wind wind { get; set; } = default!;
     }
 
-    public class Coordination
+    public class Coordination   
     {
         public double lon { get; set; }
         public double lat { get; set; }

@@ -1,4 +1,6 @@
-using Application.Services.ServiceInterface;
+using Application.DTO;
+using Application.Interface.ServiceInterface;
+using Application.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LiveWeather.Controllers
@@ -13,20 +15,18 @@ namespace LiveWeather.Controllers
         {
             this._weatherService = _weatherService;
         }
-
-        //private readonly ILogger<CrawlerController> _logger;
-        //public CrawlerController(ILogger<CrawlerController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
-        [HttpGet("City/{city}")]
-        public async Task<IActionResult> GetWeatherByName(string city)
+        [HttpGet("city/{city}")]
+        public async Task<ActionResult<ApiResponse<CityEnvironmentInfoDto>>> GetWeatherByName(string city, CancellationToken ct)
         {
-            var result = await _weatherService.GetByCityName(city);
-            return Ok(result);
+            try
+            {
+                var result = await _weatherService.GetByCityName(city);
+                return Ok(ApiResponse<CityEnvironmentInfoDto>.Ok(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(502, ApiResponse<CityEnvironmentInfoDto>.Fail("Error occured", ex.Message));
+            }
         }
-
     }
-
 }
