@@ -21,24 +21,17 @@ using static System.Net.WebRequestMethods;
 
 namespace Infrastructure.ExternalServices
 {
-    public class WeatherCrawller : IWeatherCrawller
+    public class WeatherCrawller(
+    HttpClient http,
+    IOptions<OpenWeatherConfig> weatherConfig,
+    ILogger<WeatherCrawller> logger,
+    IStateStoreRepository stateStore) : IWeatherCrawller
     {
-        private readonly HttpClient _httpClient;
-        private readonly OpenWeatherConfig _weatherConfig;
-        private readonly ILogger<WeatherCrawller> _logger;
-        private readonly IStateStoreRepository _stateStore;
 
-        public WeatherCrawller(
-            HttpClient http,
-            IOptions<OpenWeatherConfig> weatherConfig,
-            ILogger<WeatherCrawller> logger,
-            IStateStoreRepository stateStore)
-        {
-            _httpClient = http;
-            _weatherConfig = weatherConfig.Value;
-            _logger = logger;
-            _stateStore = stateStore;
-        }
+        private readonly HttpClient _httpClient = http;
+        private readonly OpenWeatherConfig _weatherConfig = weatherConfig.Value;
+        private readonly ILogger<WeatherCrawller> _logger = logger;
+        private readonly IStateStoreRepository _stateStore = stateStore;
 
 
         public async Task<CityEnvironmentInfoDto> GetByCityName(string cityName)
